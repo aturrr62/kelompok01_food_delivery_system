@@ -1,8 +1,22 @@
-# Food Delivery System - Kelompok 01
+# 🍕 Food Delivery System - Kelompok 01
 
-Sistem food delivery berbasis microservices menggunakan Flask dan Python.
+Sistem food delivery berbasis microservices menggunakan Flask dan Python dengan arsitektur modern yang memungkinkan setiap anggota tim mengembangkan service secara independen.
 
-## Struktur Project
+---
+
+## 🎯 **TEAM ASSIGNMENTS**
+
+| Nama | Port | Service | Jurusan | 
+|------|------|---------|---------|
+| **ARTHUR** | 5001 | User Service | Informatics |
+| **rizki** | 5002 | Restaurant Service | Informatics |
+| **Nadia** | 5003 | Order Service | Informatics |
+| **aydin** | 5004 | Delivery Service | Informatics |
+| **reza** | 5005 | Payment Service | Informatics |
+
+---
+
+## 📁 **STRUKTUR PROJECT LENGKAP**
 
 ```
 food_delivery_system/
@@ -60,62 +74,223 @@ food_delivery_system/
 ├── .gitignore                   # Git ignore file
 └── README.md                    # 📖 This file
 ```
+
+---
+
+## 🚀 **QUICK START GUIDE**
+
+### **Langkah 1: Setup Environment**
+```bash
+# Clone repository (jika belum)
+git clone https://github.com/aturrr62/kelompok01_food_delivery_system
+cd food-delivery-system
+
+# Setup environment (jalanin di root directory)
+chmod +x scripts/setup.sh
+./scripts/setup.sh
 ```
 
-## Services
+### **Langkah 2: Jalankan System**
+```bash
+# Mulai API Gateway dulu
+./scripts/run-all.sh
 
-- **API Gateway** (Port 5000) - Router utama untuk semua request
-- **User Service** (Port 5001) - Manajemen user dan autentikasi
-- **Restaurant Service** (Port 5002) - Manajemen restaurant dan menu
-- **Order Service** (Port 5003) - Manajemen order dan transaksi
-- **Delivery Service** (Port 5004) - Manajemen pengiriman
-- **Payment Service** (Port 5005) - Manajemen pembayaran
-
-## Setup
-
-1. Clone repository ini
-2. Jalankan setup script:
-   ```bash
-   chmod +x scripts/setup.sh
-   ./scripts/setup.sh
-   ```
-
-3. Jalankan semua services:
-   ```bash
-   ./scripts/run-all.sh
-   ```
-
-4. Akses aplikasi di: http://localhost:5000
-
-## API Gateway
-
-API Gateway berfungsi sebagai entry point tunggal untuk semua request. Request akan di-route ke service yang sesuai berdasarkan URL pattern:
-
-- `/users/*` → User Service
-- `/restaurants/*` → Restaurant Service  
-- `/orders/*` → Order Service
-- `/deliveries/*` → Delivery Service
-- `/payments/*` → Payment Service
-
-## Health Check
-
-Untuk mengecek status semua services:
-```
-GET /health
+# 🚨 IMPORTANT: Setiap anggota tim jalankan service mereka masing-masing:
 ```
 
-## Pengembangan
+---
 
-Gunakan `service-template` sebagai template untuk membuat service baru. Setiap service harus:
+## 👥 **PANDUAN UNTUK SETIAP ANGGOTA TIM**
 
-1. Mengimplementasikan endpoint `/health`
-2. Menggunakan port yang sudah ditentukan
-3. Mengikuti struktur yang sama dengan template
+### 🔵 **ARTHUR (5001) - User Service**
+```bash
+# Buka terminal baru, jalankan:
+cd microservices/user-service
+python app.py
 
-## Tim Pengembang
+# Service akan berjalan di: http://localhost:5001
+# API akan tersedia di: http://localhost:5000/users/*
+```
 
-- **Arthur** - User Service (Port 5001)
-- **Rizki** - Restaurant Service (Port 5002)  
-- **Nadia** - Order Service (Port 5003)
-- **Aydin** - Delivery Service (Port 5004)
-- **Reza** - Payment Service (Port 5005)
+**Fungsi User Service:**
+- User registration & login
+- Profile management
+- Authentication & authorization
+- User preferences
+
+---
+
+### 🟢 **rizki (5002) - Restaurant Service**
+```bash
+# Buka terminal baru, jalankan:
+cd microservices/restaurant-service
+python app.py
+
+# Service akan berjalan di: http://localhost:5002
+# API akan tersedia di: http://localhost:5000/restaurants/*
+```
+
+**Fungsi Restaurant Service:**
+- Restaurant registration & management
+- Menu management
+- Restaurant categories
+- Operating hours & location
+
+---
+
+### 🟡 **Nadia (5003) - Order Service**
+```bash
+# Buka terminal baru, jalankan:
+cd microservices/order-service
+python app.py
+
+# Service akan berjalan di: http://localhost:5003
+# API akan tersedia di: http://localhost:5000/orders/*
+```
+
+**Fungsi Order Service:**
+- Order creation & management
+- Order tracking
+- Order history
+- Order status updates
+
+---
+
+### 🟠 **aydin (5004) - Delivery Service**
+```bash
+# Buka terminal baru, jalankan:
+cd microservices/delivery-service
+python app.py
+
+# Service akan berjalan di: http://localhost:5004
+# API akan tersedia di: http://localhost:5000/deliveries/*
+```
+
+**Fungsi Delivery Service:**
+- Delivery assignment
+- Driver tracking
+- Real-time location updates
+- Delivery status
+
+---
+
+### 🔴 **reza (5005) - Payment Service**
+```bash
+# Buka terminal baru, jalankan:
+cd microservices/payment-service
+python app.py
+
+# Service akan berjalan di: http://localhost:5005
+# API akan tersedia di: http://localhost:5000/payments/*
+```
+
+**Fungsi Payment Service:**
+- Payment processing
+- Transaction management
+- Payment history
+- Refund handling
+
+---
+
+## 🌐 **ACCESS POINTS**
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend** | http://localhost:5000 | Web Interface |
+| **API Gateway** | http://localhost:5000/health | Health Check |
+| **User Service** | http://localhost:5001 | ARTHUR |
+| **Restaurant Service** | http://localhost:5002 | rizki |
+| **Order Service** | http://localhost:5003 | Nadia |
+| **Delivery Service** | http://localhost:5004 | aydin |
+| **Payment Service** | http://localhost:5005 | reza |
+
+---
+
+## 🔄 **API ROUTING**
+
+API Gateway akan me-route request berdasarkan URL pattern:
+
+- `GET/POST /users/*` → User Service (ARTHUR)
+- `GET/POST /restaurants/*` → Restaurant Service (rizki)  
+- `GET/POST /orders/*` → Order Service (Nadia)
+- `GET/POST /deliveries/*` → Delivery Service (aydin)
+- `GET/POST /payments/*` → Payment Service (reza)
+
+---
+
+## 🛠️ **DEVELOPMENT GUIDE**
+
+### **Membuat Service Baru:**
+1. Copy `microservices/service-template/` folder
+2. Rename sesuai nama service
+3. Ubah port di `app.py` (line 73)
+4. Modifikasi model di `app.py` (line 13-25)
+5. Ubah endpoint dan nama service
+6. Update `requirements.txt` jika perlu dependencies tambahan
+
+### **Service Requirements:**
+Setiap service WAJIB memiliki:
+- ✅ Endpoint `/health` untuk health check
+- ✅ Menggunakan port yang sudah ditentukan
+- ✅ Database model dengan method `to_dict()`
+- ✅ CRUD endpoints (GET, POST, PUT, DELETE)
+- ✅ Error handling yang proper
+- ✅ Logging yang informatif
+
+---
+
+## 🚨 **TROUBLESHOOTING**
+
+### **Port sudah digunakan:**
+```bash
+# Cari process yang menggunakan port
+lsof -i :5001  # Ganti dengan port yang bermasalah
+
+# Hentikan process
+kill -9 <PID>
+```
+
+### **Database error:**
+```bash
+# Hapus database lama dan buat ulang
+rm -f microservices/*/database.db
+python app.py  # di masing-masing service
+```
+
+### **Dependencies error:**
+```bash
+# Reinstall dependencies
+pip install -r requirements.txt
+```
+
+---
+
+## ✅ **HEALTH CHECK**
+
+Untuk mengecek semua service berfungsi:
+```bash
+# Cek API Gateway
+curl http://localhost:5000/health
+
+# Cek semua service
+for port in 5001 5002 5003 5004 5005; do
+  echo "Checking port $port:"
+  curl http://localhost:$port/health
+  echo ""
+done
+```
+
+---
+
+## 📞 **SUPPORT**
+
+Jika ada masalah:
+1. Pastikan semua dependencies terinstall
+2. Cek apakah port sudah digunakan
+3. Pastikan virtual environment aktif
+4. Lihat logs di folder `logs/`
+5. Konsultasi dengan tim lain jika perlu integrasi
+
+---
+
+**🎉 Happy Coding! Semangat buat food delivery system terbaik! 🚀**
