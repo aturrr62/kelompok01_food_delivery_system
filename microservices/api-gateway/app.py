@@ -4,13 +4,14 @@ import requests
 import logging
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 app = Flask(__name__)
 CORS(app)
 
-# Konfigurasi services
 SERVICES = {
     'users': 'http://localhost:5001',
-    'restaurants': 'http://localhost:5002',
+    'restaurants': 'http://localhost:5002', 
     'orders': 'http://localhost:5003',
     'deliveries': 'http://localhost:5004',
     'payments': 'http://localhost:5005'
@@ -18,15 +19,14 @@ SERVICES = {
 
 @app.route('/<service_name>/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def gateway_proxy(service_name, path):
-    """Route request ke service yang sesuai"""
+    """Route requests to appropriate microservice"""
     if service_name not in SERVICES:
-        return jsonify({"success": False, "error": "Service tidak ditemukan"}), 404
-
+        return jsonify({"error": "Service not found"}), 404
+    
     service_url = SERVICES[service_name]
     full_url = f"{service_url}/{path}"
-
+    
     try:
-        # Forward request ke service target
         response = requests.request(
             method=request.method,
             url=full_url,
@@ -36,40 +36,28 @@ def gateway_proxy(service_name, path):
             json=request.json if request.is_json else None,
             timeout=30
         )
-        
-        return Response(response.content, status=response.status_code)
-    
+        return Response(response.content, status=response.status_code, content_type=response.headers.get('content-type'))
     except requests.exceptions.ConnectionError:
-        return jsonify({"success": False, "error": f"Service {service_name} tidak available"}), 503
+        logger.error(f"Service {service_name} unavailable")
+        return jsonify({"error": f"Service {service_name} unavailable"}), 503
     except Exception as e:
-        logging.error(f"Gateway error: {str(e)}")
-        return jsonify({"success": False, "error": "Gateway error"}), 500
+        logger.error(f"Gateway error: {str(e)}")
+        return jsonify({"error": "Gateway error"}), 500
 
 @app.route('/health', methods=['GET'])
-def gateway_health():
-    """Health check untuk semua services"""
-    services_status = {}
-    
-    for service_name, url in SERVICES.items():
-        try:
-            response = requests.get(f"{url}/health", timeout=5)
-            services_status[service_name] = {
-                'status': 'healthy' if response.status_code == 200 else 'unhealthy'
-            }
-        except Exception as e:
-            services_status[service_name] = {'status': 'unavailable'}
-    
+def health_check():
     return jsonify({
-        'gateway': 'healthy', 
-        'services': services_status
+        "status": "healthy", 
+        "service": "api-gateway",
+        "timestamp": "2024-01-01T00:00:00Z"
     })
 
 @app.route('/')
 def home():
-    """Home page redirect ke frontend"""
     return """
     <html>
         <head>
+            <title>Food Delivery System</title>
             <meta http-equiv="refresh" content="0; url=/index.html">
         </head>
         <body>
@@ -79,9 +67,8 @@ def home():
     """
 
 if __name__ == '__main__':
-    print("🚀 Starting API Gateway on port 5000")
+    print("🚀 API Gateway starting on port 5000")
     print("📡 Available services:")
     for service, url in SERVICES.items():
-        print(f"   {service}: {url}")
-    
+        print(f"   - {service}: {url}")
     app.run(host='0.0.0.0', port=5000, debug=True)
