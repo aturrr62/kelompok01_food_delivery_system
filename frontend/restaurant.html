@@ -6,6 +6,24 @@
     <title>Detail Restoran - FoodDelivery</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .menu-item:hover {
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <header class="bg-white shadow-sm sticky top-0 z-50">
@@ -32,27 +50,54 @@
     </header>
 
     <main class="container mx-auto p-4">
-        <!-- Restaurant Details -->
+        <!-- Restaurant Header -->
         <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
-            <h1 id="restaurant-title" class="text-3xl font-bold mb-2">Nama Restoran</h1>
-            <p id="restaurant-address" class="text-gray-600 mb-4">
-                <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
-                Alamat restoran
-            </p>
-            <div class="flex items-center space-x-4">
-                <span id="restaurant-cuisine" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                    Indonesian Food
-                </span>
-                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
-                    <i class="fas fa-circle text-xs mr-1"></i>Buka
-                </span>
+            <div class="flex items-start justify-between">
+                <div>
+                    <h1 id="restaurant-title" class="text-3xl font-bold mb-2">Nama Restoran</h1>
+                    <p id="restaurant-address" class="text-gray-600 mb-4">
+                        <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
+                        Alamat restoran
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <span id="restaurant-cuisine" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                            Indonesian Food
+                        </span>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                            <i class="fas fa-circle text-xs mr-1"></i>Buka
+                        </span>
+                        <span id="restaurant-phone" class="text-gray-600 text-sm">
+                            <i class="fas fa-phone mr-1"></i>021-1234567
+                        </span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="bg-blue-50 px-4 py-2 rounded-lg">
+                        <p class="text-blue-600 font-semibold">Rating: 4.5</p>
+                        <p class="text-blue-400 text-sm">⭐ ⭐ ⭐ ⭐ ☆</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Menu Section -->
         <div class="bg-white rounded-2xl shadow-sm p-6">
-            <h2 class="text-2xl font-bold mb-4">Menu</h2>
-            <div id="menu-list" class="space-y-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Menu</h2>
+                <div class="flex space-x-2">
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-utensils mr-2"></i>Semua Kategori
+                    </button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        <i class="fas fa-fire mr-2"></i>Main Course
+                    </button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        <i class="fas fa-mug-hot mr-2"></i>Minuman
+                    </button>
+                </div>
+            </div>
+            
+            <div id="menu-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="text-center py-8">
                     <div class="loading-spinner mx-auto mb-4"></div>
                     <p class="text-gray-600">Memuat menu...</p>
@@ -60,6 +105,15 @@
             </div>
         </div>
     </main>
+
+    <!-- Floating Cart Button -->
+    <div class="fixed bottom-6 right-6">
+        <a href="cart.html" class="bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition flex items-center space-x-2">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Lihat Keranjang</span>
+            <span id="floating-cart-count" class="bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">0</span>
+        </a>
+    </div>
 
     <footer class="bg-gray-800 text-white py-8 mt-12">
         <div class="container mx-auto px-4 text-center">
