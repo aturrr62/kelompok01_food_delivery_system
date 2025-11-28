@@ -356,17 +356,6 @@ food_delivery_system/
 
 ---
 
-## 👥 Team
-
-**Kelompok 01 - Food Delivery System**
-
-| Name | Role | GitHub |
-|------|------|--------|
-| [Your Name] | Project Lead | [@username](https://github.com/username) |
-| [Member 2] | Backend Developer | [@username](https://github.com/username) |
-| [Member 3] | Frontend Developer | [@username](https://github.com/username) |
-| [Member 4] | Database Designer | [@username](https://github.com/username) |
-| [Member 5] | Tester | [@username](https://github.com/username) |
 
 ---
 
