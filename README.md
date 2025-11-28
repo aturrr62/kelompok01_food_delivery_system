@@ -4,7 +4,7 @@ Sistem food delivery berbasis microservices menggunakan Flask dan Python dengan 
 
 ---
 
-## 🎯 **TEAM ASSIGNMENTS**
+## **TEAM ASSIGNMENTS**
 
 | Nama | Port | Service | Jurusan | 
 |------|------|---------|---------|
@@ -37,12 +37,12 @@ food_delivery_system/
 │       └── admin.js              # Admin page logic
 │
 ├── microservices/                # Backend microservices
-│   ├── api-gateway/              # 🚀 API Gateway (Port 5000)
+│   ├── api-gateway/              # API Gateway (Port 5000)
 │   │   ├── app.py                # Flask app untuk routing
 │   │   ├── requirements.txt      # Dependencies
 │   │   └── run.sh               # Run script
 │   │
-│   ├── service-template/         # 📋 Template untuk service baru
+│   ├── service-template/         # Template untuk service baru
 │   │   ├── app.py                # Template Flask app
 │   │   ├── requirements.txt      # Dependencies
 │   │   ├── run.sh               # Run script
@@ -58,7 +58,7 @@ food_delivery_system/
 │   │   ├── requirements.txt      # Dependencies
 │   │   └── run.sh               # Run script
 │   │
-│   ├── order-service/            # 📦 Nadia (5003)
+│   ├── order-service/            # Nadia (5003)
 │   │   ├── app.py                # Order management
 │   │   ├── requirements.txt      # Dependencies
 │   │   └── run.sh               # Run script
@@ -74,8 +74,8 @@ food_delivery_system/
 │       └── run.sh               # Run script
 │
 ├── scripts/                      # Utility scripts
-│   ├── setup.sh                 # 🛠️ Setup environment
-│   └── run-all.sh               # 🚀 Start all services
+│   ├── setup.sh                 # Setup environment
+│   └── run-all.sh               # Start all services
 │
 ├── logs/                        # Log files (auto-generated)
 │   ├── gateway.log             # API Gateway logs
@@ -87,7 +87,86 @@ food_delivery_system/
 
 ---
 
-## 🚀 **QUICK START GUIDE**
+## 🧱 **Arsitektur Sistem**
+
+```
+Frontend (HTML/JS @8080)
+        │ fetch API
+        ▼
+API Gateway (Flask @5000, JWT, Swagger)
+        │ routing per prefix
+        ▼
+Microservices (Flask @5001-5005)
+        │ SQLAlchemy ORM
+        ▼
+SQLite Database per service
+```
+
+Gateway menerima seluruh request dari frontend → memvalidasi token/headers → meneruskan ke service berdasarkan prefix (`/users`, `/restaurants`, dst). Setiap service bertanggung jawab penuh atas database-nya sendiri, sehingga tim dapat bekerja paralel.
+
+---
+
+## **Konfigurasi ENV & Port**
+
+| Komponen | Port Default | ENV Penting | Keterangan |
+|----------|--------------|-------------|------------|
+| Frontend Static | 8080 | `API_GATEWAY` (di `frontend/js/main.js`) | Mengarah ke gateway `http://localhost:5000` |
+| API Gateway | 5000 | `JWT_SECRET_KEY`, `GATEWAY_PORT` | JWT + proxy ke service |
+| User Service | 5001 | `SQLALCHEMY_DATABASE_URI=sqlite:///user_service.db` | Manajemen user/auth |
+| Restaurant Service | 5002 | `SQLALCHEMY_DATABASE_URI=sqlite:///restaurant.db` | Restoran & menu |
+| Order Service | 5003 | `SQLALCHEMY_DATABASE_URI=sqlite:///order_service.db` | Order + history |
+| Delivery Service | 5004 | `SQLALCHEMY_DATABASE_URI=sqlite:///delivery_service.db` | Kurir & tracking |
+| Payment Service | 5005 | `SQLALCHEMY_DATABASE_URI=sqlite:///payment_service.db` | Pembayaran & refund |
+
+> Set `JWT_SECRET_KEY` sesuai kebutuhan produksi (`set JWT_SECRET_KEY=...` di PowerShell / `export JWT_SECRET_KEY=...` di Unix).
+
+---
+
+## ▶️ **Urutan Start (Gateway → Services → Frontend)**
+
+1. **API Gateway**
+   ```bash
+   cd microservices/api-gateway
+   python app.py
+   ```
+2. **Microservices (5001-5005)** — masing-masing di terminal berbeda:
+   ```bash
+   cd microservices/user-service      && python app.py
+   cd microservices/restaurant-service && python app.py
+   cd microservices/order-service      && python app.py
+   cd microservices/delivery-service   && python app.py
+   cd microservices/payment-service    && python app.py
+   ```
+3. **Frontend Static Server**
+   ```bash
+   cd frontend
+   python -m http.server 8080   # atau gunakan npm serve
+   ```
+4. **Akses**
+   - Frontend konsumen: `http://localhost:8080`
+   - API Gateway: `http://localhost:5000`
+   - Swagger: `http://localhost:5000/api-docs/`
+
+Pastikan langkah 1-2 selesai sebelum membuka frontend agar semua fetch ke gateway berhasil.
+
+---
+
+## **Ringkasan Endpoint & Dokumentasi**
+
+| Service | Prefix Gateway | Contoh Endpoint | Dokumentasi |
+|---------|----------------|-----------------|-------------|
+| API Gateway | `/` | `GET /health`, `POST /auth/login` | Swagger UI (`/api-docs`), `docs/openapi-spec-api-gateway.yaml` |
+| User | `/api/user-service` | `GET /api/user-service/api/users` | Swagger + Postman |
+| Restaurant | `/api/restaurant-service` | `GET /api/restaurant-service/api/restaurants` | Swagger + Postman |
+| Order | `/api/order-service` | `POST /api/order-service/api/orders` | Swagger + Postman |
+| Delivery | `/api/delivery-service` | `GET /api/delivery-service/api/deliveries` | Swagger + Postman |
+| Payment | `/api/payment-service` | `POST /api/payment-service/api/payments` | Swagger + Postman |
+
+Detail lengkap (cara akses Swagger, cara import Postman, dsb) tersedia di `docs/api/README.md`. Sertakan juga environment `docs/POSTMAN_ENVIRONMENT.json` saat testing.
+
+---
+
+## **QUICK START GUIDE**
 
 ### **Langkah 1: Setup Environment**
 ```bash
@@ -202,11 +281,11 @@ python app.py
 
 ---
 
-## 🌐 **ACCESS POINTS**
+## **ACCESS POINTS**
 
 | Service | URL | Description |
 |---------|-----|-------------|
-| **Frontend** | http://localhost:5000 | Web Interface |
+| **Frontend** | http://localhost:8080 | Web Interface (static server) |
 | **API Gateway** | http://localhost:5000/health | Health Check |
 | **User Service** | http://localhost:5001 | ARTHUR |
 | **Restaurant Service** | http://localhost:5002 | rizki |
@@ -216,7 +295,7 @@ python app.py
 
 ---
 
-## 🔄 **API ROUTING**
+## **API ROUTING**
 
 API Gateway akan me-route request berdasarkan URL pattern:
 
@@ -228,7 +307,7 @@ API Gateway akan me-route request berdasarkan URL pattern:
 
 ---
 
-## 🛠️ **DEVELOPMENT GUIDE**
+## **DEVELOPMENT GUIDE**
 
 ### **Membuat Service Baru:**
 1. Copy `microservices/service-template/` folder
@@ -240,12 +319,12 @@ API Gateway akan me-route request berdasarkan URL pattern:
 
 ### **Service Requirements:**
 Setiap service WAJIB memiliki:
-- ✅ Endpoint `/health` untuk health check
-- ✅ Menggunakan port yang sudah ditentukan
-- ✅ Database model dengan method `to_dict()`
-- ✅ CRUD endpoints (GET, POST, PUT, DELETE)
-- ✅ Error handling yang proper
-- ✅ Logging yang informatif
+- Endpoint `/health` untuk health check
+- Menggunakan port yang sudah ditentukan
+- Database model dengan method `to_dict()`
+- CRUD endpoints (GET, POST, PUT, DELETE)
+- Error handling yang proper
+- Logging yang informatif
 
 ---
 
@@ -275,7 +354,7 @@ pip install -r requirements.txt
 
 ---
 
-## ✅ **HEALTH CHECK**
+## **HEALTH CHECK**
 
 Untuk mengecek semua service berfungsi:
 ```bash
@@ -292,6 +371,37 @@ done
 
 ---
 
+## **Database & Seed**
+
+- **DB yang dipakai:** SQLite (1 file per service pada `microservices/<service>/instance/`).
+- **Schema resmi:** `database/schema/*.sql`.
+- **Seed otomatis:** jalankan `python database/seed/run_seed.py` untuk:
+  1. Menghapus file database lama
+  2. Menerapkan schema sesuai service
+  3. Mengisi data contoh (user admin/customer, restoran, order, delivery, payment)
+- Panduan lengkap + langkah verifikasi tersedia di `database/README.md`.
+
+---
+
+## **Frontend Build & Run**
+
+1. Pastikan gateway + seluruh service (5000-5005) berjalan.
+2. Jalankan server statis:
+   ```bash
+   cd frontend
+   python -m http.server 8080   # atau gunakan npx serve .
+   ```
+3. Akses `http://localhost:8080`. Frontend akan memanggil gateway (`API_GATEWAY = http://localhost:5000`) sehingga tidak ada request langsung ke microservice.
+
+---
+
+## 🎥 **Video Demo & Bukti Pengujian**
+
+- Simpan URL video demo (≤10 menit) pada `video/link.txt`. Pastikan video menampilkan arsitektur, proses run (gateway → services → frontend), demo inter-service via gateway, dokumentasi API, dan frontend.
+- Letakkan screenshot bukti Swagger/Postman/health ke folder `evidence/` dengan nama file sesuai daftar pada `evidence/README.md`.
+
+---
+
 ## 📞 **SUPPORT**
 
 Jika ada masalah:
@@ -303,7 +413,7 @@ Jika ada masalah:
 
 ---
 
-## 🎨 **FRONTEND PAGES**
+## **FRONTEND PAGES**
 
 Sistem frontend sudah dilengkapi dengan halaman-halaman lengkap:
 
@@ -316,4 +426,4 @@ Sistem frontend sudah dilengkapi dengan halaman-halaman lengkap:
 
 ---
 
-**🎉 Happy Coding! Semangat buat food delivery system terbaik! 🚀**
+**Happy Coding! Semangat buat food delivery system terbaik! **

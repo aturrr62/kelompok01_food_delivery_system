@@ -1,0 +1,365 @@
+{
+    "info": {
+        "name": "Food Delivery - Direct to Services (FIXED)",
+        "description": "Direct access to microservices without API Gateway",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. User Service (Port 5001)",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5001/health"
+                    }
+                },
+                {
+                    "name": "Get All Users",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5001/api/users"
+                    }
+                },
+                {
+                    "name": "Get User by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5001/api/users/1"
+                    }
+                },
+                {
+                    "name": "Create User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"full_name\": \"Test User\",\n  \"phone\": \"08123456789\",\n  \"user_type\": \"customer\"\n}"
+                        },
+                        "url": "http://localhost:5001/api/users"
+                    }
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"login\",\n  \"username\": \"testuser\",\n  \"password\": \"password123\"\n}"
+                        },
+                        "url": "http://localhost:5001/api/users"
+                    }
+                },
+                {
+                    "name": "Update User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"full_name\": \"Updated Name\"\n}"
+                        },
+                        "url": "http://localhost:5001/api/users/1"
+                    }
+                },
+                {
+                    "name": "Delete User",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:5001/api/users/1"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "2. Restaurant Service (Port 5002)",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5002/health"
+                    }
+                },
+                {
+                    "name": "Get All Restaurants",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5002/api/restaurants"
+                    }
+                },
+                {
+                    "name": "Get Restaurant by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5002/api/restaurants/1"
+                    }
+                },
+                {
+                    "name": "Create Restaurant",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Warung Padang\",\n  \"description\": \"Authentic Padang cuisine\",\n  \"address\": \"Jl. Sudirman No. 123\",\n  \"phone\": \"021-12345678\",\n  \"email\": \"padang@example.com\",\n  \"rating\": 4.5,\n  \"menu\": [\n    {\"name\": \"Rendang\", \"price\": 35000, \"category\": \"main\"},\n    {\"name\": \"Ayam Pop\", \"price\": 25000, \"category\": \"main\"}\n  ]\n}"
+                        },
+                        "url": "http://localhost:5002/api/restaurants"
+                    }
+                },
+                {
+                    "name": "Update Restaurant",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"Updated Restaurant\",\n  \"rating\": 4.8\n}"
+                        },
+                        "url": "http://localhost:5002/api/restaurants/1"
+                    }
+                },
+                {
+                    "name": "Delete Restaurant",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:5002/api/restaurants/1"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "3. Order Service (Port 5003)",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5003/health"
+                    }
+                },
+                {
+                    "name": "Get All Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5003/api/orders"
+                    }
+                },
+                {
+                    "name": "Get Order by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5003/api/orders/1"
+                    }
+                },
+                {
+                    "name": "Create Order",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"restaurant_id\": 1,\n  \"delivery_address\": \"Jl. Gatot Subroto No. 45\",\n  \"notes\": \"Extra spicy\",\n  \"items\": [\n    {\"menu_item_id\": 1, \"menu_item_name\": \"Rendang\", \"quantity\": 2, \"unit_price\": 35000}\n  ]\n}"
+                        },
+                        "url": "http://localhost:5003/api/orders"
+                    }
+                },
+                {
+                    "name": "Update Order",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"confirmed\"\n}"
+                        },
+                        "url": "http://localhost:5003/api/orders/1"
+                    }
+                },
+                {
+                    "name": "Delete Order",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:5003/api/orders/1"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "4. Delivery Service (Port 5004)",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5004/health"
+                    }
+                },
+                {
+                    "name": "Get All Deliveries",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5004/api/deliveries"
+                    }
+                },
+                {
+                    "name": "Create Delivery",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"order_id\": 1,\n  \"delivery_address\": \"Jl. Gatot Subroto No. 45\",\n  \"pickup_address\": \"Jl. Sudirman No. 123\"\n}"
+                        },
+                        "url": "http://localhost:5004/api/deliveries"
+                    }
+                },
+                {
+                    "name": "Update Delivery",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"courier_id\": 1,\n  \"courier_name\": \"John Doe\",\n  \"status\": \"in_transit\"\n}"
+                        },
+                        "url": "http://localhost:5004/api/deliveries/1"
+                    }
+                },
+                {
+                    "name": "Delete Delivery",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:5004/api/deliveries/1"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "5. Payment Service (Port 5005)",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5005/health"
+                    }
+                },
+                {
+                    "name": "Get All Payments",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:5005/api/payments"
+                    }
+                },
+                {
+                    "name": "Create Payment",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"order_id\": 1,\n  \"user_id\": 1,\n  \"amount\": 70000,\n  \"payment_method\": \"credit_card\",\n  \"auto_process\": true\n}"
+                        },
+                        "url": "http://localhost:5005/api/payments"
+                    }
+                },
+                {
+                    "name": "Update Payment (Refund)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"action\": \"refund\",\n  \"refund_amount\": 70000,\n  \"refund_reason\": \"Customer request\"\n}"
+                        },
+                        "url": "http://localhost:5005/api/payments/1"
+                    }
+                },
+                {
+                    "name": "Delete Payment",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:5005/api/payments/1"
+                    }
+                }
+            ]
+        }
+    ]
+}

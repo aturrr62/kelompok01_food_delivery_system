@@ -1,21 +1,21 @@
-# 🎯 CRUD Operations & Features Documentation
+# CRUD Operations & Features Documentation
 
-## 📊 **CURRENT STATUS - SEBELUM PERBAIKAN**
+## **CURRENT STATUS - SEBELUM PERBAIKAN**
 
-### ✅ **Yang Sudah Ada:**
+### **Yang Sudah Ada:**
 - **CREATE** - Semua service bisa create data baru
 - **READ** - Semua service bisa read data (all + by ID)  
 - **UPDATE** - 4 dari 5 service ada update operations
 - **Business Logic** - Status updates, payment processing, dll
 
-### ❌ **Yang BELUM Ada:**
+### **Yang BELUM Ada:**
 - **DELETE operations** di semua service
 - **Full CRUD untuk menu items** di Restaurant Service
 - **Soft delete** untuk data integrity
 
 ---
 
-## 🆕 **FITUR BARU YANG SUDAH DITAMBAHKAN**
+## **FITUR BARU YANG SUDAH DITAMBAHKAN**
 
 ### 1. **🗑️ DELETE OPERATIONS - Semua Service**
 
@@ -76,7 +76,7 @@ deleted_at = db.Column(db.DateTime, nullable=True)  # Soft delete
 - Parameter `?include_deleted=true`: Menampilkan semua data termasuk yang di-soft delete
 - Soft delete data tidak terlihat di list normal tapi tetap ada di database
 
-### 4. **⚡ BULK OPERATIONS**
+### 4. **BULK OPERATIONS**
 
 #### **Bulk Soft Delete:**
 ```
@@ -92,7 +92,7 @@ Content-Type: application/json
 {"ids": [1, 2, 3]}
 ```
 
-### 5. **🔍 ADVANCED FILTERING**
+### 5. **ADVANCED FILTERING**
 
 #### **Filter Menu Items:**
 ```
@@ -111,7 +111,7 @@ Content-Type: application/json
 }
 ```
 
-### 6. **📱 ENHANCED API RESPONSES**
+### 6. **ENHANCED API RESPONSES**
 
 #### **Response Format dengan Metadata:**
 ```json
@@ -133,7 +133,7 @@ Content-Type: application/json
 
 ---
 
-## 🚀 **CONTOH PENGGUNAAN**
+## **CONTOH PENGGUNAAN**
 
 ### **1. Menu Item Management**
 
@@ -200,7 +200,7 @@ curl -X POST http://localhost:5002/api/menu-items/filter \
 
 ---
 
-## 📋 **ENDPOINTS LENGKAP - SERVICE TEMPLATE**
+## **ENDPOINTS LENGKAP - SERVICE TEMPLATE**
 
 ### **Base CRUD:**
 ```
@@ -255,7 +255,7 @@ POST   /api/<resource>/bulk-restore       - Bulk restore
 
 ---
 
-## ✅ **CHECKLIST - STATUS TERKINI**
+## **CHECKLIST - STATUS TERKINI**
 
 ### **CRUD Operations:**
 - [x] **CREATE** - ✓ Semua service
@@ -275,4 +275,4 @@ POST   /api/<resource>/bulk-restore       - Bulk restore
 - [x] **Restaurant Integration** - ✓ Relationship dengan restaurant
 - [x] **Bulk Operations** - ✓ Mass operations
 
-**🎉 PROJECT SUDAH LENGKAP DENGAN SEMUA FITUR CRUD YANG DIPERLUKAN!**
+**PROJECT SUDAH LENGKAP DENGAN SEMUA FITUR CRUD YANG DIPERLUKAN!**
